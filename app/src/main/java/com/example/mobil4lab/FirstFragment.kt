@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 
 class FirstFragment : Fragment(R.layout.fragment_first) {
@@ -24,15 +25,13 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sendData: Button = view.findViewById(R.id.send_data)
-        sendData.setOnClickListener { openSecondFragment() }
+        val nextButton: Button = view.findViewById(R.id.next)
+        nextButton.setOnClickListener {
+            openSecondFragment() }
     }
     private fun openSecondFragment() {
-        /**
-         * Используем FragmentResultAPI для возврата результата
-         */
-        setFragmentResult(REQUEST_FRAGMENT, bundleOf(EXTRA_TEXT to "Hello from FirstFragment")
-    }
+        val navController = findNavController()
+        navController.navigate(R.id.action_to_secondFragment) }
 
     companion object {
         /**

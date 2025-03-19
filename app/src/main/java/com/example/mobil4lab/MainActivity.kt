@@ -5,6 +5,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.fragment.NavHostFragment
+import com.example.mobil4lab.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,20 +14,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?)
     { super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        /**
-         * Создание транзакции на добавление фрагмента
-         */
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_host, FirstFragment.newInstance(), null)
-            .commit()
-
-        supportFragmentManager.setFragmentResultListener(
-            FirstFragment.REQUEST_FRAGMENT, this, ::onFirstFragmentResult
-        )
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_content)
+                as NavHostFragment
+        val navController = navHostFragment.navController
     }
 
-    private fun onFirstFragmentResult(requestKey: String, data: Bundle) {
+    /*private fun onFirstFragmentResult(requestKey: String, data: Bundle) {
         val text = data.getString(FirstFragment.EXTRA_TEXT) ?:
             throw IllegalArgumentException("TODO")
 
@@ -33,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragment_host, SecondFragment.newInstance(text), null)
             .addToBackStack("SecondFragment")
             .commit()
-    }
+    }*/
 
 
 }
