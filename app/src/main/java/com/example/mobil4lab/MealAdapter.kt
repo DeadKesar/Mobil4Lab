@@ -48,7 +48,12 @@ class MealViewHolder(
 
     fun bind(item: MealItem) {
         nameView.text = item.strMeal
-        statusView.text = "Area: ${item.strArea ?: "Unknown"}"
-        categoryView.text = "Category: ${item.strCategory ?: "Unknown"}"
+        statusView.text = itemView.context.getString(R.string.Meal_adapter_area, item.strArea ?: itemView.context.getString(
+            R.string.meal_adapter_no_area
+        ))
+        categoryView.text =
+            itemView.context.getString(R.string.meal_adaptr_categor, item.strCategory ?: itemView.context.getString(
+                R.string.meal_adapter_no_category
+            ))
     }
 }

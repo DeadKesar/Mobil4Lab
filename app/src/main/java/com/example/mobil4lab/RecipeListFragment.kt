@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,15 +27,15 @@ class RecipeListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         adapter = MealAdapter(mutableListOf()) { meal ->
-            (activity as? MainActivity)?.setCurrentRecipeId(meal.idMeal) // Используем публичный метод
+            (activity as? MainActivity)?.setCurrentRecipeId(meal.idMeal)
             val action = RecipeListFragmentDirections.actionToRecipeDetail(meal.idMeal)
             findNavController().navigate(action)
         }
         recyclerView.adapter = adapter
 
-        viewModel.recipes.observe(viewLifecycleOwner, Observer { meals ->
+        viewModel.recipes.observe(viewLifecycleOwner) { meals ->
             adapter.updateMeals(meals.toMutableList())
-        })
+        }
 
         viewModel.loadRecipes()
     }

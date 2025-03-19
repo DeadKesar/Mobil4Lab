@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -41,28 +40,43 @@ class RecipeDetailFragment : Fragment() {
         }
 
         addToShoppingListButton.setOnClickListener {
+            val meal = viewModel.recipeDetails.value
+            val ingredients = meal?.getIngredientsWithMeasures() ?: emptyList()
+
+            val message = if (ingredients.isEmpty()) {
+                getString(R.string.detail_dialog_fr_no_ingr)
+            } else {
+                ingredients.joinToString("\n") { "${it.first} - ${it.second}" }
+            }
+
             MaterialAlertDialogBuilder(requireContext())
-                .setTitle("добавить в корзину")
-                .setMessage("Хотите добавить ингредиенты в корзину?")
-                .setPositiveButton("Да") { dialog, _ -> dialog.dismiss() }
-                .setNegativeButton("Нет") { dialog, _ -> dialog.dismiss() }
+                .setTitle(getString(R.string.dialog_reciept_det_fr))
+                .setMessage(message)
+                .setPositiveButton(getString(R.string.dialog_detail_fr_yes)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setNegativeButton(getString(R.string.detail_dialog_fr_no)) { dialog, _ -> dialog.dismiss() }
                 .show()
         }
 
-        viewModel.recipeDetails.observe(viewLifecycleOwner, Observer { meal ->
+        viewModel.recipeDetails.observe(viewLifecycleOwner) { meal ->
             meal?.let {
                 detailName.text = it.strMeal
-                detailStatus.text = "Area: ${it.strArea ?: "Unknown"}"
-                detailInstructions.text = it.strInstructions?.replace("\r\n", "\n") ?: "No instructions"
+                detailStatus.text = getString(
+                    R.string.area_detail_fr,
+                    it.strArea ?: getString(R.string.detail_dialog_fr_unknown)
+                )
+                detailInstructions.text = it.strInstructions?.replace("\r\n", "\n")
+                    ?: getString(R.string.detail_dialog_fr_no_instructions)
                 it.strMealThumb?.let { url ->
                     Glide.with(this@RecipeDetailFragment)
                         .load(url.replace("\\/", "/"))
                         .into(detailImage)
                 }
             } ?: run {
-                detailName.text = "Error loading details"
+                detailName.text = getString(R.string.error_loading_details_Recipe_fr)
             }
-        })
+        }
 
         viewModel.loadRecipeDetails(args.recipeId)
     }
