@@ -1,11 +1,9 @@
 package com.example.mobil4lab
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.mobil4lab.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,17 +18,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.main_content)
                 as NavHostFragment
         val navController = navHostFragment.navController
+
+        binding.bottomNav.setupWithNavController(navController)
     }
-
-    /*private fun onFirstFragmentResult(requestKey: String, data: Bundle) {
-        val text = data.getString(FirstFragment.EXTRA_TEXT) ?:
-            throw IllegalArgumentException("TODO")
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_host, SecondFragment.newInstance(text), null)
-            .addToBackStack("SecondFragment")
-            .commit()
-    }*/
-
-
 }
