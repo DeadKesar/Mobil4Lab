@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:id="@+id/firstFragment"
-        android:icon="@drawable/baseline_data_thresholding_24"
-        android:title="First"/>
+        android:id="@+id/recipeListFragment"
+        android:icon="@drawable/menu_icon"
+        android:title="Recipes" />
     <item
-        android:id="@+id/thirdFragment"
-        android:icon="@drawable/baseline_dataset_24"
-        android:title="Second"/>
+        android:id="@+id/recipeDetailFragment"
+        android:icon="@drawable/burger_icon"
+        android:title="Details" />
+    <item
+        android:id="@+id/cookingStepsFragment"
+        android:icon="@drawable/kastulka_icon"
+        android:title="Steps" />
 </menu>
