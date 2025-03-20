@@ -43,8 +43,6 @@
             android:name="recipeId"
             app:argType="string" />
     </fragment>
-
-    <!-- Add global actions -->
     <action
         android:id="@+id/action_global_to_recipeDetail"
         app:destination="@id/recipeDetailFragment">
